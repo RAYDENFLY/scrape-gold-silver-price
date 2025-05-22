@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Harga Emas & Perak Real-time</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <div class="bg-white shadow-lg rounded-2xl p-6 max-w-md w-full">
+    <h1 class="text-2xl font-bold text-yellow-600 text-center mb-4">Harga Emas & Perak</h1>
+    
+    <div id="harga" class="space-y-3 text-center">
+      <p class="text-gray-500 italic">Memuat data...</p>
+    </div>
+
+    <div class="mt-6 text-sm text-gray-500 text-center">
+      Data emas dari <a href="https://pluang.com/" target="_blank" class="text-blue-500 hover:underline">Pluang</a><br>
+      Data perak dari <a href="https://harga-emas.org/perak/" target="_blank" class="text-blue-500 hover:underline">harga-emas.org</a>
+    </div>
+  </div>
+
+  <script>
+    async function fetchHarga() {
+      const hargaDiv = document.getElementById('harga');
+      hargaDiv.innerHTML = '<p class="text-gray-500 italic">Memuat data...</p>';
+
+      try {
+        const res = await fetch('/api/harga-emas');
+        if (!res.ok) throw new Error('Gagal mengambil data');
+        const data = await res.json();
+
+        hargaDiv.innerHTML = `
+          <p class="text-lg font-semibold text-gray-800">
+            Harga Emas <span class="text-yellow-600 font-bold">SELL</span>: ${data.emas.sell}
+          </p>
+          <p class="text-lg font-semibold text-gray-800">
+            Harga Emas <span class="text-yellow-600 font-bold">BUY</span>: ${data.emas.buy}
+          </p>
+          <p class="text-lg font-semibold text-gray-800">
+            Harga <span class="text-gray-600 font-bold">Perak (asli)</span>: ${data.perak.asli}/g
+          </p>
+          <p class="text-lg font-semibold text-gray-800">
+            Harga <span class="text-gray-600 font-bold">Perak (bulat)</span>: ${data.perak.bulat}/g
+          </p>
+        `;
+      } catch (err) {
+        hargaDiv.innerHTML = `<p class="text-red-500 font-medium">${err.message}</p>`;
+      }
+    }
+
+    fetchHarga();
+    setInterval(fetchHarga, 60000);
+  </script>
+</body>
+</html>
