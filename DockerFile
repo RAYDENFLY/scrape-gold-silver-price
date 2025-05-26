@@ -45,10 +45,6 @@ WORKDIR /app
 
 COPY package*.json ./
 
-# Lanjut langsung ke install deps
-RUN npm config set registry https://registry.npmjs.org \
-  && npm install
-
 RUN npm install
 
 COPY . .
