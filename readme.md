@@ -36,6 +36,20 @@ Proyek ini digunakan untuk melakukan _scraping_ harga **emas** dari [Pluang](htt
 Server akan mulai berjalan dan mengambil data emas serta perak secara periodik.
 
 ---
+## ⚠️ Troubleshooting (VPS/Docker)
+
+Jika muncul error seperti:
+```
+Running as root without --no-sandbox is not supported. See https://crbug.com/638180.
+```
+Solusi:
+- Edit kode pada bagian `puppeteer.launch()` menjadi:
+  ```js
+  puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] })
+  ```
+- Atau, **gunakan library alternatif** seperti `cheerio` + `axios` agar tidak perlu browser headless (lebih ringan dan kompatibel di VPS).
+
+---
 ## 📄 Lisensi
 
 Proyek ini bersifat open-source dan dapat digunakan untuk keperluan edukasi atau pribadi. Cek file LICENSE untuk detail.
