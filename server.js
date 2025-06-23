@@ -139,6 +139,13 @@ app.get('/api/harga-emas', (req, res) => {
   res.json(cachedHarga);
 });
 
+app.get('/api/harga-perak', (req, res) => {
+  if (!cachedHarga || !cachedHarga.perak) {
+    return res.status(503).json({ error: 'Data harga perak belum tersedia, coba lagi sebentar.' });
+  }
+  res.json({ perak: cachedHarga.perak });
+});
+
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
