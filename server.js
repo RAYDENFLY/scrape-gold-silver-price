@@ -139,6 +139,10 @@ app.get('/api/harga-emas', (req, res) => {
   res.json(cachedHarga);
 });
 
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
 app.listen(PORT, () => {
   console.log(`Server berjalan di http://localhost:${PORT}`);
 });

@@ -27,13 +27,8 @@
 
       try {
         const res = await fetch('/api/harga-emas');
-        if (!res.ok) throw new Error('Gagal mengambil data dari server');
+        if (!res.ok) throw new Error('Gagal mengambil data');
         const data = await res.json();
-
-        if (!data.emas || !data.perak) {
-          hargaDiv.innerHTML = `<p class="text-red-500 font-medium">Data belum tersedia. Silakan refresh beberapa saat lagi.</p>`;
-          return;
-        }
 
         hargaDiv.innerHTML = `
           <p class="text-lg font-semibold text-gray-800">
@@ -50,7 +45,7 @@
           </p>
         `;
       } catch (err) {
-        hargaDiv.innerHTML = `<p class="text-red-500 font-medium">Gagal memuat data: ${err.message}</p>`;
+        hargaDiv.innerHTML = `<p class="text-red-500 font-medium">${err.message}</p>`;
       }
     }
 
